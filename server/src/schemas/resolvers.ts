@@ -1,5 +1,5 @@
-import Book from "../models/BookGQL";
-import User from "../models/UserGQL";
+import Book from "../models/BookGQL.js";
+import User from "../models/UserGQL.js";
 
 interface UserArgs {
   userID: string;
