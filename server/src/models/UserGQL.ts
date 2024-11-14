@@ -1,6 +1,6 @@
 import { Schema, model, type Document } from "mongoose";
 
-import { IBookDocument } from "./BookGQL";
+import {bookSchema, type IBookDocument} from "./BookGQL";
 
 export interface IUserDocument extends Document {
   username: string;
@@ -27,12 +27,12 @@ const userSchema = new Schema<IUserDocument>(
       type: String,
       required: true,
     },
-    savedBooks: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Book",
-      },
-    ],
+    savedBooks: [bookSchema]
+      // {
+      //   type: Schema.Types.ObjectId,
+      //   ref: "Book",
+      // },
+    //],
   },
   {
     timestamps: true,

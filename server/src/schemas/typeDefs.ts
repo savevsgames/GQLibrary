@@ -1,6 +1,6 @@
 const typeDefs = `
     type Book {
-        _id: ID
+        bookId: String
         title: String
         authors: [String]
         description: String
@@ -9,7 +9,7 @@ const typeDefs = `
     }
 
     type User {
-        _id: ID
+        _id: ID!
         username: String
         email: String
         password: String
@@ -17,11 +17,15 @@ const typeDefs = `
         bookCount: Int
     }
 
+    type Auth {
+        token: ID!
+        user: User
+    }
+
     type Query {
-        users: [User]
+        me: User
         books(userId: ID!): [Book]
-        user(userID: ID!): User  
-        book(bookID: ID!): Book   
+        book(bookId: ID!): Book
     }
 `;
 
