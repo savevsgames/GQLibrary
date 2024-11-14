@@ -1,3 +1,4 @@
-import User from './User';
+import User from "./UserGQL";
+import Book from "./BookGQL";
 
-export default { User };
+export { User, Book };
