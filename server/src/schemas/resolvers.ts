@@ -37,6 +37,7 @@ const resolvers = {
       context: Context
     ): Promise<User | null> => {
       if (!context.user) {
+        console.log("Not Authenticated");
         // If not authenticated, throw an authentication error
         throw new AuthenticationError("Not Authenticated");
       }
@@ -45,6 +46,7 @@ const resolvers = {
         .lean(); // Convert Mongoose document to plain JavaScript object
 
       if (!userData) {
+        console.log("User not found");
         throw new GraphQLError("User not found"); // Auth worked but user not found?
       }
       // Return the user data (ie the me query)
@@ -52,20 +54,29 @@ const resolvers = {
     },
     books: async (
       _parent: unknown,
-      { _id }: UserArgs,
+      { userId }: { userId?: string },
       context: Context
-    ): Promise<Book[] | null> => {
-      if (context.user) {
-        return await User.findOne(
-          { _id: _id },
-          { savedBooks: 1, _id: 0 } // Only return savedBooks field / _id: 0 means don't return _id field
-        );
+    ) => {
+      try {
+        const searchId = userId || context.user?._id; // userId from params or context.user._id
+
+        if (!searchId) {
+          throw new GraphQLError("User Id is required");
+        }
+
+        const userData = await User.findById(searchId).select("savedBooks"); // Find the user by the params object and only return the savedBooks field
+
+        if (!userData) {
+          throw new GraphQLError("User not found");
+        }
+
+        // Return the savedBooks array if user is found
+        return userData.savedBooks;
+      } catch (err) {
+        console.log("Authentication Error: ", err);
+        // If not authenticated, throw an authentication error
+        throw new AuthenticationError("Not Authenticated");
       }
-      // If not authenticated, throw an authentication error
-      throw new AuthenticationError("Not Authenticated");
-    },
-    book: async (_parent: unknown, { bookID }: BookArgs) => {
-      return await Book.findOne({ _id: bookID });
     },
   },
 };
