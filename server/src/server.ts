@@ -14,6 +14,7 @@ import { typeDefs, resolvers } from "./schemas/index.js";
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true, // enables introspection of the schema
 });
 
 // startApolloServer
