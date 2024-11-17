@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { ADD_USER } from "../utils/mutations";
-import { QUERY_ME } from "../utils/queries";
+// import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import { useMutation } from "@apollo/client";
 
@@ -18,9 +18,7 @@ const SignupForm = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
   // Mutation to add user
-  const [addUser] = useMutation(ADD_USER, {
-    refetchQueries: [QUERY_ME, "QUERY_ME"],
-  });
+  const [addUser] = useMutation(ADD_USER);
 
   // handle form input changes
   const handleInputChange = (event) => {
@@ -37,9 +35,11 @@ const SignupForm = () => {
       event.stopPropagation();
     }
     try {
+      // Use the addUser mutation to add a user
       const data = await addUser({
-        variables: { input: { ...userFormData } },
+        variables: { ...userFormData },
       });
+      console.log("Creating User", data);
       // Create a new user and log them in with a token
       Auth.login(data.addUser.token);
     } catch (error) {

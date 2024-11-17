@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Request } from "express";
 import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
 
