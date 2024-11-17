@@ -3,7 +3,7 @@ const typeDefs = `
     _id: ID!
     bookId: String!
     title: String!
-    authors: [String]!
+    authors: [String]
     description: String
     image: String
     link: String
@@ -20,7 +20,7 @@ const typeDefs = `
 
   type Auth {
     token: ID!
-    user: User!
+    user: User
   }
 
   type Query {
@@ -38,7 +38,7 @@ const typeDefs = `
   input BookInput {
     bookId: String!
     title: String!
-    authors: [String]!
+    authors: [String]
     description: String
     image: String
     link: String
