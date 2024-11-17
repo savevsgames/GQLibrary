@@ -19,7 +19,7 @@ const SignupForm = () => {
   const [showAlert, setShowAlert] = useState(false);
   // Mutation to add user
   const [addUser] = useMutation(ADD_USER, {
-    refetchQueries: [QUERY_ME, "GET_ME"],
+    refetchQueries: [QUERY_ME, "QUERY_ME"],
   });
 
   // handle form input changes
