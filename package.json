@@ -11,7 +11,9 @@
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
     "render-build": "npm install && npm run build",
     "seed": "cd server && npm run seed",
-    "cleanDB": "cd server && npm run cleanDB"
+    "cleanDB": "cd server && npm run cleanDB",
+    "build:server": "cd server && npm run build",
+    "start:server": "cd server && npm start"
   },
   "keywords": [],
   "author": "",

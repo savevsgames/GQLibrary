@@ -31,13 +31,17 @@ const startApolloServer = async () => {
   const PORT = process.env.PORT || 3001;
   const app = express();
 
+  const allowedOrigins =
+    process.env.NODE_ENV === "production"
+      ? ["https://frontendserviceaddress"] // Render frontend URL
+      : ["http://localhost:3000"]; // Local development
+
   app.use(
     cors({
-      origin: "http://localhost:3000", // Frontend URL
+      origin: allowedOrigins,
       credentials: true,
     })
   );
-
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 

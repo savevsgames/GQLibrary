@@ -1,6 +1,7 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar.tsx";
+import API_URL from "./config.js";
 
 import {
   ApolloClient,
@@ -12,7 +13,7 @@ import { setContext } from "@apollo/client/link/context";
 
 // Construct a new Apollo HttpLink that connects to our GraphQL API
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql", // Full URL to the local GraphQL server - http://localhost:3001/graphql
+  uri: API_URL, // Full URL to the local GraphQL server - http://localhost:3001/graphql
 });
 
 // Construct a new Apollo Link that adds the token to every request

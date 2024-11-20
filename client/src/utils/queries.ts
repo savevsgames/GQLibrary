@@ -56,7 +56,7 @@ import { gql } from "@apollo/client";
 
 // // getBook query constructor
 // export const GET_BOOK = gql`
-//   query getBook($bookId: ID!) {
+//   query getBook($bookId: String!) {
 //     book(bookId: $bookId) {
 //       _id
 //       authors
