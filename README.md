@@ -38,29 +38,34 @@
    ```bash
    npm install
    ```
-   
+
 ## Usage
 
 1. Ensure that the necessary environment variables are set up in a `.env` file (refer to `.env.EXAMPLE` for the required variables).
-2. Seed the database:
-   ```bash
-   npm run seed
-   ```
-3. Start the application:
+
+2. Start the application:
    ```bash
    npm run render:start
    ```
-4. By default, the front end will be available at `http://localhost:3000`, and the server/API will be accessible at `http://localhost:3001`.
+3. By default, the front end will be available at `http://localhost:3000`, and the server/API will be accessible at `http://localhost:3001`.
+
+4. Optionally, you can run the seed and cleanDB scripts to work with "placeholder-data" on the server side:
+5. ```bash
+   npm run cleanDB // cleans the database named in your .env file as: MONGODB_URI
+   npm run seed // seeds the database named in your .env file as: MONGODB_URI
+   ```
+
+````
 
 ## Environment Variables
 
-- Set up a `.env` file in the root directory with the variables specified in `.env.EXAMPLE`.
+- Set up a `.env` file in the server directory with the variables specified in `.env.EXAMPLE`.
 - Example:
-  ```dotenv
-  MONGODB_URI=<your_mongodb_connection_string>
-  JWT_SECRET=<your_jwt_secret>
-  ```
-  
+```dotenv
+MONGODB_URI=<your_mongodb_connection_string>
+JWT_SECRET=<your_jwt_secret>
+````
+
 ## Technologies Used
 
 - [Node.js](https://nodejs.org/)
