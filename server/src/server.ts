@@ -35,15 +35,26 @@ const startApolloServer = async () => {
 
   const allowedOrigins =
     process.env.NODE_ENV === "production"
-      ? ["https://stunning-nasturtium-ba3d98.netlify.app/"] // Render frontend URL
+      ? ["https://stunning-nasturtium-ba3d98.netlify.app"] // Remove trailing slash
       : ["http://localhost:3000"]; // Local development
 
   app.use(
     cors({
-      origin: allowedOrigins,
+      // callback is a function that takes two arguments: error and options
+      // we use it here to check if the origin is in the allowedOrigins array and allow origin of null to pass
+      origin: function (origin, callback) {
+        // Allow requests with no origin (e.g., mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+          return callback(null, true);
+        } else {
+          return callback(new Error("Not allowed by CORS"));
+        }
+      },
       credentials: true,
     })
   );
+
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
