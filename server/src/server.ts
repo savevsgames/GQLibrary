@@ -12,6 +12,8 @@ import { authenticateToken } from "./utils/auth.js";
 // Import our typeDefs and resolvers
 import { typeDefs, resolvers } from "./schemas/index.js";
 
+import { fileURLToPath } from "url";
+
 // Create a new ApolloServer and pass in our schema data
 const server = new ApolloServer({
   typeDefs,
@@ -87,6 +89,10 @@ const startApolloServer = async () => {
   //     },
   //   })
   // );
+
+  // Get the __dirname equivalent
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
 
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === "production") {
