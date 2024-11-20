@@ -41,10 +41,21 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
+  // app.use(
+  //   "/graphql",
+  //   expressMiddleware(server as any, {
+  //     context: authenticateToken as any,
+  //   })
+  // );
+
   app.use(
     "/graphql",
     expressMiddleware(server as any, {
-      context: authenticateToken as any,
+      context: async ({ req }) => {
+        const authContext = await authenticateToken(req);
+        console.log("Server - Context generated:", authContext);
+        return authContext; // Always return an object, even if authentication fails
+      },
     })
   );
 

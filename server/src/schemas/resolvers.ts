@@ -49,6 +49,7 @@ interface Context {
 const resolvers = {
   Query: {
     me: async (_parent: unknown, _args: unknown, context: Context) => {
+      console.log("Resolvers - Context in `me` query:", context.user);
       if (context.user) {
         return await User.findById({ _id: context.user._id });
       }

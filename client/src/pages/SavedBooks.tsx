@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { Navigate, useParams } from "react-router-dom";
 import { QUERY_ME } from "../utils/queries";
@@ -12,9 +12,9 @@ import { useQuery, useMutation } from "@apollo/client";
 const SavedBooks = () => {
   const { userId: userParam } = useParams();
 
-  const { loading, data } = useQuery(QUERY_ME, {
-    variables: { userId: userParam },
-  });
+  console.log("Saved Books - userParam: ", userParam);
+
+  const { loading, data } = useQuery(QUERY_ME);
 
   const [removeBook] = useMutation(REMOVE_BOOK, {
     refetchQueries: [QUERY_ME, "me"],
@@ -26,13 +26,19 @@ const SavedBooks = () => {
     savedBooks: [],
   });
 
-  const user = data?.me || data?.user || {};
+  // const user = data?.me || data?.user || {};
 
+  useEffect(() => {
+    if (data && data.me) {
+      console.log("Setting userData from QUERY_ME data:", data.me);
+      setUserData(data.me);
+    }
+  }, [data]);
+
+  console.log("Checking user data for saved books: ", userData);
   // This if condition checks if the user is logged in and if the logged-in user's username matches the userParam.
-  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    setUserData(user);
-    // If the condition is true, it navigates to the "/me" route, which is the user's saved books page.
-    return <Navigate to="/me" />;
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/" />;
   }
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -50,8 +56,14 @@ const SavedBooks = () => {
         throw new Error("something went wrong!");
       }
       // TODO: Update the user data after the book is removed
+      useEffect(() => {
+        if (data && data.me) {
+          console.log("Setting userData from QUERY_ME data:", data.me);
+          setUserData(data.me);
+        }
+      }, [data]);
       // const updatedUser = await response.json();
-      setUserData(user);
+      // setUserData(data);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {

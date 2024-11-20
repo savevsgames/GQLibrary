@@ -1,7 +1,6 @@
 import type { Request } from "express";
 import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
-import { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,7 +14,7 @@ if (!SECRET_KEY) {
 
 export const authenticateToken = async (req: Request) => {
   if (!req || !req.headers) {
-    console.log("Request or headers missing in context");
+    console.log("Server Auth - Request or headers missing in context");
     return { user: null }; // Return a default context
   }
 
@@ -27,16 +26,16 @@ export const authenticateToken = async (req: Request) => {
   }
 
   if (!token) {
-    console.log("No token provided");
+    console.log("Server Auth- No token provided, returning null user...");
     return { user: null }; // Return a default context
   }
 
   try {
     const { data }: any = jwt.verify(token, `${SECRET_KEY}`, {
-      maxAge: "1h",
+      maxAge: "2h",
     });
-    console.log("Token verified", data);
-    return { user: (data as JwtPayload).data };
+    console.log("Server Auth - Token verified - returning user data: ", data);
+    return { user: data };
   } catch (error) {
     console.error("Invalid Token", error);
     return { user: null }; // Return a default context
@@ -47,7 +46,7 @@ export const signToken = (username: string, email: string, _id: unknown) => {
   const payload = { username, email, _id };
   const secretKey: any = process.env.JWT_SECRET_KEY;
 
-  return jwt.sign({ data: payload }, secretKey, { expiresIn: "1h" });
+  return jwt.sign({ data: payload }, secretKey, { expiresIn: "2h" });
 };
 
 export class AuthenticationError extends GraphQLError {
