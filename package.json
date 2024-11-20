@@ -13,7 +13,8 @@
     "seed": "cd server && npm run seed",
     "cleanDB": "cd server && npm run cleanDB",
     "build:server": "cd server && npm run build",
-    "start:server": "cd server && npm start"
+    "start:server": "cd server && npm start",
+    "install:server": "cd server && npm i"
   },
   "keywords": [],
   "author": "",
