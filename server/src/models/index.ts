@@ -1,3 +1,3 @@
 import User from "./UserGQL.js";
 
-export { User };
+export default User;

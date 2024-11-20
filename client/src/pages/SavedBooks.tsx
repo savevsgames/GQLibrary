@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { Navigate, useParams } from "react-router-dom";
-import { QUERY_ME, GET_USER } from "../utils/queries";
+import { QUERY_ME } from "../utils/queries";
 
 import { REMOVE_BOOK } from "../utils/mutations";
 import Auth from "../utils/auth";
-// import { removeBookId } from '../utils/localStorage';
+import { removeBookId } from "../utils/localStorage";
 import type { User } from "../models/User";
 import { useQuery, useMutation } from "@apollo/client";
 
 const SavedBooks = () => {
   const { userId: userParam } = useParams();
 
-  const { loading, data } = useQuery(userParam ? GET_USER : QUERY_ME, {
+  const { loading, data } = useQuery(QUERY_ME, {
     variables: { userId: userParam },
   });
 
@@ -52,9 +52,8 @@ const SavedBooks = () => {
       // TODO: Update the user data after the book is removed
       // const updatedUser = await response.json();
       setUserData(user);
-      // TODO: Determine if local storage is needed
       // upon success, remove book's id from localStorage
-      // removeBookId(bookId);
+      removeBookId(bookId);
     } catch (err) {
       console.error(err);
     }

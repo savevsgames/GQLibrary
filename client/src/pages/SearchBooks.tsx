@@ -9,7 +9,6 @@ import type { Book } from "../models/Book";
 import type { GoogleAPIBook } from "../models/GoogleAPIBook";
 import { useMutation } from "@apollo/client";
 import { ADD_BOOK } from "../utils/mutations";
-import { GET_BOOKS } from "../utils/queries";
 import { QUERY_ME } from "../utils/queries";
 
 const SearchBooks = () => {
@@ -20,7 +19,7 @@ const SearchBooks = () => {
 
   // Use mutation to save a book to the database
   const [saveBook] = useMutation(ADD_BOOK, {
-    refetchQueries: [GET_BOOKS, "getBooks", QUERY_ME, "me"],
+    refetchQueries: [QUERY_ME, "me"],
   });
 
   // create state to hold saved bookId values
@@ -86,7 +85,7 @@ const SearchBooks = () => {
       }
 
       // if book successfully saves to user's account, save book id to state
-      // setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
       console.error(err);
     }

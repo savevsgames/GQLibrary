@@ -1,4 +1,4 @@
-import { User } from "../models/index.js";
+import User from "../models/index.js";
 import { userSeedData } from "./seedData.js";
 import cleanDB from "./cleanDB.js";
 import db from "../config/connection.js";

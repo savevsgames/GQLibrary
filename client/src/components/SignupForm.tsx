@@ -4,24 +4,43 @@ import { Form, Button, Alert } from "react-bootstrap";
 
 import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
-import type { User } from "../models/User";
+// import type { User } from "../models/User";
 import { useMutation } from "@apollo/client";
 
+interface SignupFormProps {
+  handleModalClose: () => void;
+}
+
+interface SignupFormData {
+  username: string;
+  email: string;
+  password: string;
+}
+
 // biome-ignore lint/correctness/noEmptyPattern: <explanation>
-const SignupForm = ({}: { handleModalClose: () => void }) => {
+const SignupForm = ({ handleModalClose }: SignupFormProps) => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState<User>({
+  const [userFormData, setUserFormData] = useState<SignupFormData>({
     username: "",
     email: "",
     password: "",
-    savedBooks: [],
   });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
   // Mutation to add user
-  const [addUser] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER, {
+    onError: (error) => {
+      console.error("Signup error:", error);
+      setShowAlert(true);
+    },
+    onCompleted: (data) => {
+      console.log("User created successfully:", data);
+      Auth.login(data.addUser.token);
+      handleModalClose(); // Close the modal on success
+    },
+  });
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -44,8 +63,6 @@ const SignupForm = ({}: { handleModalClose: () => void }) => {
         variables: { ...userFormData },
       });
       console.log("Creating User", data);
-      // Create a new user and log them in with a token
-      Auth.login(data.addUser.token);
     } catch (error) {
       console.error(error);
       setShowAlert(true);
@@ -55,7 +72,6 @@ const SignupForm = ({}: { handleModalClose: () => void }) => {
       username: "",
       email: "",
       password: "",
-      savedBooks: [],
     });
   };
 

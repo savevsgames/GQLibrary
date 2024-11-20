@@ -12,13 +12,13 @@ import { setContext } from "@apollo/client/link/context";
 
 // Construct a new Apollo HttpLink that connects to our GraphQL API
 const httpLink = createHttpLink({
-  uri: "/graphql", // Server URL
+  uri: "http://localhost:3001/graphql", // Full URL to the local GraphQL server - http://localhost:3001/graphql
 });
 
 // Construct a new Apollo Link that adds the token to every request
 const authLink = setContext((_, { headers }) => {
   // Get the authentication token from local storage if it exists
-  const token = localStorage.getItem("id_token");
+  const token = localStorage.getItem("id_token") || "";
 
   // Return the ...headers with the authToken to the context so httpLink can read them
   return {

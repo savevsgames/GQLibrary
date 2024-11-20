@@ -35,9 +35,12 @@ const userSchema = new Schema<IUserDocument>(
     // set savedBooks to be an array of data that adheres to the bookSchema
     savedBooks: [bookSchema],
   },
-  // set this to use virtual below
+
   {
     toJSON: {
+      virtuals: true,
+    },
+    toObject: {
       virtuals: true,
     },
   }
