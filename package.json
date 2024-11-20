@@ -14,7 +14,9 @@
     "cleanDB": "cd server && npm run cleanDB",
     "build:server": "cd server && npm run build",
     "start:server": "cd server && npm start",
-    "install:server": "cd server && npm i"
+    "install:server": "cd server && npm i",
+    "start:client": "cd client && npm start",
+    "build:client": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
