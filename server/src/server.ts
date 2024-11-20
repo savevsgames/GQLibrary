@@ -35,7 +35,7 @@ const startApolloServer = async () => {
 
   const allowedOrigins =
     process.env.NODE_ENV === "production"
-      ? ["https://frontendserviceaddress"] // Render frontend URL
+      ? ["https://stunning-nasturtium-ba3d98.netlify.app/"] // Render frontend URL
       : ["http://localhost:3000"]; // Local development
 
   app.use(
