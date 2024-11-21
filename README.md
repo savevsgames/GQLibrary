@@ -12,6 +12,10 @@
 
 **GQLibrary** is a MERN stack application designed as a book search engine. Originally built with a RESTful API, this app is refactored to use a GraphQL API with Apollo Server. Users can search for books and save their favorite titles to their account. The app includes user authentication and utilizes the Google Books API for book data.
 
+[**LIVE DEMO** 🖥️](https://stunning-nasturtium-ba3d98.netlify.app/)
+
+![GQLibrary](screenshot.png)
+
 ## Table of Contents
 
 - [GQLibrary](#gqlibrary)
